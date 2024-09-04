@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Header from './components/Header';
+import Menu from './components/Menu';
+import Settings from './components/settings';
+import './i18n';
 
-function App() {
+const App = () => {
+  const [language, setLanguage] = useState('en');
+
+  const handleLanguageChange = (newLanguage) => {
+    setLanguage(newLanguage);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Menu language={language} />} />
+        <Route path="/settings" element={<Settings onLanguageChange={handleLanguageChange} />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
